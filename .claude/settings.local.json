@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "WebFetch(domain:ui.shadcn.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(mv \"home.jpg.jpg\" \"home.jpg\")",
+      "Bash(mv \"tracker.jpg.jpg\" \"tracker.jpg\")",
+      "Bash(mv \"game-review.jpg.jpg\" \"game-review.jpg\")",
+      "Bash(mv \"journal.jpg.jpg\" \"journal.jpg\")",
+      "Bash(mv \"patterns.jpg.jpg\" \"patterns.jpg\")"
+    ],
+    "defaultMode": "bypassPermissions"
+  }
+}
