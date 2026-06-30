@@ -4,9 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ChessTrack — Find the move that cost you the game</title>
-<meta name="description" content="ChessTrack replays your games, finds the moment it went wrong, and turns recurring mistakes into a plan. Not engine lines. Your patterns." />
-<meta property="og:title" content="ChessTrack — Find the move that cost you the game" />
-<meta property="og:description" content="Replays your games, catches the losing move, and turns recurring mistakes into a plan." />
+<meta name="description" content="ChessTrack runs a real engine on your games, explains every blunder in one plain sentence, and builds puzzles from your own mistakes. Syncs with Chess.com and Lichess." />
+<meta property="og:title" content="ChessTrack — The engine gives you a number. We give you the reason." />
+<meta property="og:description" content="A real engine explains every blunder in plain English, then builds targeted puzzles from the mistakes you actually make. Syncs with Chess.com and Lichess." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -693,8 +693,69 @@
   .stagger.visible > *:nth-child(3) { transition-delay: 0.21s; }
   .stagger.visible > *:nth-child(4) { transition-delay: 0.29s; }
   .stagger.visible > *:nth-child(5) { transition-delay: 0.37s; }
+  .stagger.visible > *:nth-child(6) { transition-delay: 0.45s; }
+  .stagger.visible > *:nth-child(7) { transition-delay: 0.53s; }
+  .stagger.visible > *:nth-child(8) { transition-delay: 0.61s; }
+
+  /* ---------- TRANSLATE: engine number -> lesson ---------- */
+  .translate-card {
+    background: linear-gradient(160deg, var(--raised), var(--surface));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px -34px rgba(0,0,0,0.8);
+  }
+  .translate-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; }
+  .tpanel { padding: 36px 34px; }
+  .tpanel.engine { border-right: 1px solid var(--border); }
+  .tpanel.coach { background: rgba(201,183,133,0.045); }
+  .plabel {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tpanel.coach .plabel { color: var(--accent-dim); }
+  .evalbar {
+    height: 10px; border-radius: 999px; background: #0E0B07;
+    border: 1px solid var(--border); overflow: hidden; margin-bottom: 18px; position: relative;
+  }
+  .evalbar > i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--danger), #c2564b); }
+  .engine-readout { font-family: var(--mono); font-size: 14px; line-height: 2.05; }
+  .engine-readout > div { display: flex; gap: 10px; }
+  .engine-readout .k { color: var(--muted); min-width: 86px; }
+  .engine-readout .num { color: var(--text); }
+  .engine-readout .bad { color: var(--danger); }
+  .engine-readout .good { color: var(--success); }
+  .tarrow { display: flex; align-items: center; justify-content: center; padding: 0 8px; color: var(--accent); font-size: 22px; background: var(--ink); }
+  .lesson { font-family: var(--serif); font-size: clamp(19px, 2.2vw, 23px); line-height: 1.5; color: var(--text); font-weight: 500; }
+  .lesson b { color: var(--accent-lt); font-weight: 600; }
+  .lesson-fix { margin-top: 16px; font-size: 14.5px; color: var(--sub); line-height: 1.65; }
+  .lesson-fix strong { color: var(--text); font-weight: 600; }
+
+  /* ---------- PUZZLES: targeted from your mistakes ---------- */
+  .puzzle {
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center;
+    background: linear-gradient(160deg, var(--raised), var(--surface));
+    border: 1px solid var(--border); border-radius: 22px; padding: 54px;
+  }
+  .puzzle-panel { background: var(--ink); border: 1px solid var(--border); border-radius: 16px; padding: 24px 24px 20px; }
+  .pp-head { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 18px; }
+  .pp-head .pp-from { color: var(--accent-dim); }
+  .pp-row { display: grid; grid-template-columns: 1fr 86px auto; align-items: center; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+  .pp-row:last-of-type { border-bottom: none; }
+  .pp-name { font-size: 14px; color: var(--text); }
+  .pp-bar { height: 6px; background: #0E0B07; border-radius: 999px; overflow: hidden; }
+  .pp-bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent-dim), var(--accent)); border-radius: 999px; }
+  .pp-cnt { font-family: var(--mono); font-size: 11.5px; color: var(--accent); white-space: nowrap; }
+  .pp-foot { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--border); font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
 
   /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px) {
+    .translate-grid { grid-template-columns: 1fr; }
+    .tpanel.engine { border-right: none; border-bottom: 1px solid var(--border); }
+    .tarrow { transform: rotate(90deg); padding: 10px 0; }
+    .puzzle { grid-template-columns: 1fr; gap: 34px; padding: 36px 28px; }
+  }
   @media (max-width: 940px) {
     .hero { grid-template-columns: 1fr; gap: 48px; padding-top: 130px; text-align: left; }
     .board-stage { max-width: 440px; }
@@ -741,7 +802,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-copy">
-      <div class="hero-badge"><span class="dot"></span> Watching this game for the losing move…</div>
+      <div class="hero-badge"><span class="dot"></span> Reading the engine so you don't have to…</div>
       <h1>
         <span class="reveal-word" style="animation-delay:.05s">Find</span>
         <span class="reveal-word" style="animation-delay:.13s">the</span>
@@ -752,7 +813,7 @@
         <span class="reveal-word" style="animation-delay:.53s">the</span>
         <span class="reveal-word" style="animation-delay:.61s">game.</span>
       </h1>
-      <p class="sub">ChessTrack replays every game, catches the moment it went wrong, and turns your recurring mistakes into a plan. Not engine lines. <strong style="color:var(--text);font-weight:600">Your patterns.</strong></p>
+      <p class="sub">ChessTrack runs a real engine on every game, then tells you in one plain sentence what went wrong and how to fix it. The eval becomes a lesson. <strong style="color:var(--text);font-weight:600">Not just a number.</strong></p>
       <div class="cta-row">
         <a href="https://expo.dev/artifacts/eas/kRMFVuL1BiGpLS49QjgeXY.apk" target="_blank" class="btn btn-primary" data-install-guide>Download for Android</a>
         <a href="#features" class="btn btn-outline">See how it works</a>
@@ -773,8 +834,8 @@
         <div class="scoresheet">
           <div class="moves" id="moves"></div>
           <div class="verdict" id="verdict">
-            <span class="chip">Mistake found</span>
-            <span id="verdictText">f7 was left undefended. 3…Nf6 walks straight into mate.</span>
+            <span class="chip">Blunder</span>
+            <span id="verdictText">In plain words: 3…Nf6 ignores the threat to f7. Defend with …g6 or …Qe7 first.</span>
           </div>
         </div>
       </div>
@@ -785,10 +846,10 @@
   <div class="strip reveal">
     <div class="strip-track">
       <span>
-        <b>e4</b> openings drift <b>·</b> time-pressure blunders <b>·</b> hung pieces <b>·</b> missed tactics <b>·</b> king safety <b>·</b> endgame conversion <b>·</b> rating plateaus <b>·</b>
+        <b>−2.6</b> explained in english <b>·</b> hung pieces <b>·</b> missed tactics <b>·</b> back-rank mates <b>·</b> blunder → lesson <b>·</b> targeted puzzles <b>·</b> king safety <b>·</b> rating plateaus <b>·</b>
       </span>
       <span aria-hidden="true">
-        <b>e4</b> openings drift <b>·</b> time-pressure blunders <b>·</b> hung pieces <b>·</b> missed tactics <b>·</b> king safety <b>·</b> endgame conversion <b>·</b> rating plateaus <b>·</b>
+        <b>−2.6</b> explained in english <b>·</b> hung pieces <b>·</b> missed tactics <b>·</b> back-rank mates <b>·</b> blunder → lesson <b>·</b> targeted puzzles <b>·</b> king safety <b>·</b> rating plateaus <b>·</b>
       </span>
     </div>
   </div>
@@ -820,38 +881,105 @@
     </div>
   </section>
 
+  <!-- TRANSLATE: numbers into lessons (core idea) -->
+  <section id="explain">
+    <div class="container">
+      <div class="section-head center reveal">
+        <div class="eyebrow"><span class="move">2. Nf3</span> the core idea</div>
+        <h2 class="section-title">The engine gives you <em>a number.</em><br>ChessTrack gives you <em>the reason.</em></h2>
+        <p class="section-sub">Every game runs through a real engine. Then a coaching layer turns that cold evaluation into one plain sentence: what you missed, and what to play instead.</p>
+      </div>
+      <div class="translate-card reveal">
+        <div class="translate-grid">
+          <div class="tpanel engine">
+            <div class="plabel">&#9707; engine readout · move 18</div>
+            <div class="evalbar"><i style="width:74%"></i></div>
+            <div class="engine-readout">
+              <div><span class="k">you played</span> <span class="num">18. Bxh3</span></div>
+              <div><span class="k">eval swing</span> <span class="num">+0.3</span> &#8594; <span class="bad">−2.6</span></div>
+              <div><span class="k">you lost</span> <span class="bad">291 centipawns</span></div>
+              <div><span class="k">best move</span> <span class="good">18. Nf3</span></div>
+              <div><span class="k">verdict</span> <span class="bad">Blunder</span></div>
+            </div>
+          </div>
+          <div class="tarrow" aria-hidden="true">&#8594;</div>
+          <div class="tpanel coach">
+            <div class="plabel">&#9818; chesstrack · in plain english</div>
+            <div class="lesson">You won a pawn, but <b>traded off the bishop guarding your king</b> and the open h-file let the attack crash through.</div>
+            <div class="lesson-fix"><strong>Play instead:</strong> keep the bishop home, develop with Nf3 to cover the squares, and get the king safe before you go pawn-hunting.</div>
+          </div>
+        </div>
+      </div>
+      <p class="reveal" style="text-align:center;color:var(--muted);font-family:var(--mono);font-size:12.5px;margin-top:22px;letter-spacing:0.03em">no chess jargon required · every blunder, mistake &amp; inaccuracy gets a sentence</p>
+    </div>
+  </section>
+
+  <!-- PUZZLES: targeted, personalized practice -->
+  <section id="puzzles">
+    <div class="container">
+      <div class="puzzle reveal">
+        <div class="puzzle-copy">
+          <div class="eyebrow"><span class="move">3. Bc4</span> targeted practice</div>
+          <h2 class="section-title" style="font-size:clamp(28px,3.6vw,40px)">Don't just spot the mistake.<br><em>Drill it out of your game.</em></h2>
+          <p class="section-sub">ChessTrack reads the patterns behind your losses and builds a puzzle set aimed straight at them. Keep missing back-rank mates? That's what you'll train. Personalized, not random.</p>
+          <a href="#download" class="btn btn-outline" style="margin-top:26px">Start drilling</a>
+        </div>
+        <div class="puzzle-panel">
+          <div class="pp-head"><span>your weak spots</span><span class="pp-from">from your last 42 games</span></div>
+          <div class="pp-row"><span class="pp-name">Hanging pieces</span><span class="pp-bar"><i style="width:84%"></i></span><span class="pp-cnt">14 puzzles</span></div>
+          <div class="pp-row"><span class="pp-name">Back-rank weakness</span><span class="pp-bar"><i style="width:64%"></i></span><span class="pp-cnt">9 puzzles</span></div>
+          <div class="pp-row"><span class="pp-name">Missed forks</span><span class="pp-bar"><i style="width:48%"></i></span><span class="pp-cnt">7 puzzles</span></div>
+          <div class="pp-row"><span class="pp-name">Time-pressure slips</span><span class="pp-bar"><i style="width:34%"></i></span><span class="pp-cnt">5 puzzles</span></div>
+          <div class="pp-foot">35 puzzles queued · tuned to the mistakes you actually make</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FEATURES -->
   <section id="features">
     <div class="container">
       <div class="section-head reveal">
-        <div class="eyebrow"><span class="move">2. Nf3</span> what's inside</div>
+        <div class="eyebrow"><span class="move">4. O-O</span> the full toolkit</div>
         <h2 class="section-title">Built to break a plateau,<br>not to <em>play your moves for you.</em></h2>
-        <p class="section-sub">Six tools that turn a finished game into something you can actually learn from.</p>
+        <p class="section-sub">Eight tools that turn a finished game into something you can actually learn from.</p>
       </div>
       <div class="features stagger">
         <div class="feature">
-          <div class="ico">&#8635;</div>
-          <span class="tag">sync</span>
-          <h3>Auto game sync</h3>
-          <p>Link Chess.com or Lichess and your games arrive on their own: results, opponents, and time controls, no manual entry.</p>
+          <div class="ico">&#9707;</div>
+          <span class="tag">coach</span>
+          <h3>Stockfish, in plain English</h3>
+          <p>A real engine flags every blunder, mistake, and inaccuracy, then a coaching layer says what went wrong in one sentence you don't need a rating to read.</p>
         </div>
         <div class="feature">
-          <div class="ico">&#9707;</div>
+          <div class="ico">&#9819;</div>
+          <span class="tag">drill</span>
+          <h3>Puzzles from your mistakes</h3>
+          <p>Targeted, personalized practice built from the patterns you actually miss, so you train your real weak spots instead of random tactics.</p>
+        </div>
+        <div class="feature">
+          <div class="ico">&#8635;</div>
+          <span class="tag">connect</span>
+          <h3>Chess.com &amp; Lichess sync</h3>
+          <p>Link your account once and games arrive on their own: results, opponents, and time controls, with no manual entry.</p>
+        </div>
+        <div class="feature">
+          <div class="ico">&#9636;</div>
           <span class="tag">replay</span>
           <h3>Move-by-move review</h3>
-          <p>Step through any game on an interactive board. Heuristic flags surface opening drift, king-safety holes, and time-pressure blunders, each with a concrete fix.</p>
-        </div>
-        <div class="feature">
-          <div class="ico">&#9650;</div>
-          <span class="tag">trend</span>
-          <h3>Rating tracker</h3>
-          <p>Your Elo as a trend line, synced or logged by hand. See exactly when you climbed, when you slid, and what changed.</p>
+          <p>Step through any game on an interactive board and find the exact moment the position turned against you.</p>
         </div>
         <div class="feature">
           <div class="ico">&#9678;</div>
           <span class="tag">patterns</span>
           <h3>Pattern analysis</h3>
           <p>Tag each mistake: tactical miss, time pressure, opening slip. After a few games your costliest recurring weakness rises to the top.</p>
+        </div>
+        <div class="feature">
+          <div class="ico">&#9650;</div>
+          <span class="tag">trend</span>
+          <h3>Rating tracker</h3>
+          <p>Your Elo as a trend line, synced or logged by hand. See exactly when you climbed, when you slid, and what changed.</p>
         </div>
         <div class="feature">
           <div class="ico">&#9836;</div>
@@ -873,7 +1001,7 @@
   <section>
     <div class="container">
       <div class="section-head center reveal">
-        <div class="eyebrow"><span class="move">3. d4</span> on the board</div>
+        <div class="eyebrow"><span class="move">5. d4</span> on the board</div>
         <h2 class="section-title">Quiet, fast, and built<br>for <em>one job.</em></h2>
       </div>
     </div>
@@ -893,7 +1021,7 @@
     <div class="container">
       <div class="tracker">
         <div class="reveal">
-          <div class="eyebrow"><span class="move">4. O-O</span> the long game</div>
+          <div class="eyebrow"><span class="move">6. Re1</span> the long game</div>
           <h2 class="section-title" style="font-size:clamp(28px,3.4vw,38px)">Watch the line<br>finally <em>climb.</em></h2>
           <ul class="tracker-list" style="margin-top:28px">
             <li><span class="n">a)</span><div><h4>Every game, on the curve</h4><p>Synced results plot themselves so the trend is honest, with no cherry-picking your good days.</p></div></li>
@@ -922,21 +1050,11 @@
     </div>
   </section>
 
-  <!-- VALUE -->
-  <section>
-    <div class="container value reveal">
-      <div class="eyebrow" style="justify-content:center"><span class="move">5. Qd2</span> the difference</div>
-      <p class="q">"Most apps show you the engine's move."</p>
-      <h2>ChessTrack shows you <em>yourself.</em></h2>
-      <p>Instead of handing you the best line, it helps you understand why you played the move you did, and how to fix the thinking pattern behind it. The engine knows chess. This knows your chess.</p>
-    </div>
-  </section>
-
   <!-- TESTIMONIALS -->
   <section>
     <div class="container">
       <div class="section-head center reveal">
-        <div class="eyebrow"><span class="move">6. Rfe1</span> from the club</div>
+        <div class="eyebrow"><span class="move">7. c3</span> from the club</div>
         <h2 class="section-title">For players who'd rather <em>improve.</em></h2>
       </div>
     </div>
@@ -945,14 +1063,14 @@
         <div class="tcard"><div class="stars">★★★★★</div><p>"Finally an app that tells me <em>why</em> I'm losing, not just where the blunder was."</p><div class="who">Alex K. · 1400 rapid</div></div>
         <div class="tcard"><div class="stars">★★★★★</div><p>"The voice reflection is genius. I record my thoughts right after the game while it's still fresh."</p><div class="who">Sarah M. · club player</div></div>
         <div class="tcard"><div class="stars">★★★★★</div><p>"Tagged ten games and realised 70% of my losses were time pressure. That one insight changed how I play."</p><div class="who">Marcus T. · 1650 rapid</div></div>
-        <div class="tcard"><div class="stars">★★★★★</div><p>"The review board is exactly what I wanted. Simple, clean, no clutter to fight through."</p><div class="who">James L. · club player</div></div>
-        <div class="tcard"><div class="stars">★★★★★</div><p>"I've tried every chess app. This is the only one actually focused on improvement, not just playing more."</p><div class="who">David W. · 1800 rapid</div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p>"It finally explains the engine in words I actually get. No more staring at −1.4 wondering what I did wrong."</p><div class="who">James L. · club player</div></div>
+        <div class="tcard"><div class="stars">★★★★★</div><p>"The puzzles come straight from my own blunders, so practice actually hits my weak spots instead of random tactics."</p><div class="who">David W. · 1800 rapid</div></div>
         <!-- loop dup -->
         <div class="tcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"Finally an app that tells me <em>why</em> I'm losing, not just where the blunder was."</p><div class="who">Alex K. · 1400 rapid</div></div>
         <div class="tcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"The voice reflection is genius. I record my thoughts right after the game while it's still fresh."</p><div class="who">Sarah M. · club player</div></div>
         <div class="tcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"Tagged ten games and realised 70% of my losses were time pressure. That one insight changed how I play."</p><div class="who">Marcus T. · 1650 rapid</div></div>
-        <div class="tcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"The review board is exactly what I wanted. Simple, clean, no clutter to fight through."</p><div class="who">James L. · club player</div></div>
-        <div class="tcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"I've tried every chess app. This is the only one actually focused on improvement, not just playing more."</p><div class="who">David W. · 1800 rapid</div></div>
+        <div class="tcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"It finally explains the engine in words I actually get. No more staring at −1.4 wondering what I did wrong."</p><div class="who">James L. · club player</div></div>
+        <div class="tcard" aria-hidden="true"><div class="stars">★★★★★</div><p>"The puzzles come straight from my own blunders, so practice actually hits my weak spots instead of random tactics."</p><div class="who">David W. · 1800 rapid</div></div>
       </div>
     </div>
   </section>
@@ -962,8 +1080,8 @@
     <div class="container">
       <div class="download reveal">
         <div class="mark-big">&#9812;</div>
-        <h2>Stop replaying losses.<br>Start ending them.</h2>
-        <p>Free on Android. No account, no ads, no subscription, just your games and a reason for every result.</p>
+        <h2>Stop guessing at the eval bar.<br>Start understanding it.</h2>
+        <p>Free on Android. No account, no ads, no subscription, just your games and a plain-English reason for every result.</p>
         <a href="https://expo.dev/artifacts/eas/kRMFVuL1BiGpLS49QjgeXY.apk" target="_blank" class="btn btn-primary" style="font-size:16px;padding:18px 36px" data-install-guide>Download the APK</a>
         <div class="stats">free · android · chess.com + lichess · no subscription</div>
       </div>
