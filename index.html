@@ -597,9 +597,29 @@
   .footer-inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
   .footer-brand { font-family: var(--display); font-weight: 800; color: var(--text); font-size: 18px; display: inline-flex; gap: 8px; align-items: center; }
   .footer-brand .mark { color: var(--accent); }
+  .footer-right { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
   .footer-links { font-family: var(--mono); font-size: 12.5px; color: var(--muted); display: flex; gap: 22px; }
   .footer-links a { transition: color 0.2s ease; }
   .footer-links a:hover { color: var(--accent); }
+  .report-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.02em;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border-lt);
+    border-radius: 10px;
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+  .report-btn span { color: var(--accent); }
+  .report-btn:hover { border-color: var(--accent); background: rgba(201,183,133,0.06); transform: translateY(-1px); }
+  .link-inline {
+    background: none; border: none; padding: 0; cursor: pointer;
+    font: inherit; color: var(--muted); text-decoration: underline;
+    text-underline-offset: 2px; transition: color 0.2s ease;
+  }
+  .link-inline:hover { color: var(--accent); }
   .footer-copy { max-width: 1120px; margin: 28px auto 0; font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
   .footer-copy { color: #4A4234; }
 
@@ -668,7 +688,79 @@
     transition: filter 0.2s ease, transform 0.2s ease;
   }
   .modal-btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+  .modal-btn { display: flex; align-items: center; justify-content: center; gap: 8px; }
   body.modal-open { overflow: hidden; }
+
+  /* ---------- REPORT FORM ---------- */
+  .field-label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 18px 0 10px;
+  }
+  .field-label em { font-style: normal; color: var(--faint); text-transform: none; letter-spacing: 0; }
+  .field-label:first-of-type { margin-top: 4px; }
+  .pillrow { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    font-family: var(--sans);
+    font-size: 13.5px;
+    color: var(--sub);
+    background: var(--raised);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .pill:hover { border-color: var(--border-lt); color: var(--text); }
+  .pill.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #1a1610;
+    font-weight: 500;
+  }
+  .field-input {
+    width: 100%;
+    background: var(--ink);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 15px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14.5px;
+    line-height: 1.55;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .field-input::placeholder { color: var(--muted); }
+  .field-input:focus-visible {
+    outline: none;
+    border-color: var(--accent-dim);
+    box-shadow: 0 0 0 3px rgba(201,183,133,0.14);
+  }
+  textarea.field-input { resize: vertical; min-height: 120px; }
+  .field-error { color: var(--danger); font-size: 13px; margin-top: 12px; }
+  .modal-note-sm {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.7;
+    margin-top: 14px;
+  }
+  #reportForm .modal-btn { margin-top: 22px; }
+  .report-sent { text-align: center; padding: 12px 0 4px; }
+  .report-sent .sent-check {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(111,192,138,0.14);
+    border: 1px solid rgba(111,192,138,0.4);
+    color: var(--success);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin: 8px auto 18px;
+  }
+  .report-sent h4 { font-family: var(--serif); font-size: 22px; margin-bottom: 8px; color: var(--text); }
+  .report-sent p { color: var(--sub); font-size: 14px; line-height: 1.6; max-width: 340px; margin: 0 auto 22px; }
 
   /* ---------- REVEAL ---------- */
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
@@ -1078,13 +1170,16 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand"><span class="mark">&#9816;</span> ChessTrack</div>
-      <div class="footer-links">
-        <a href="#features">Features</a>
-        <a href="#download">Download</a>
-        <a href="https://github.com/chenchen20092020-lgtm/chesstrack-landing" target="_blank">GitHub</a>
+      <div class="footer-right">
+        <div class="footer-links">
+          <a href="#features">Features</a>
+          <a href="#download">Download</a>
+          <a href="https://github.com/chenchen20092020-lgtm/chesstrack-landing" target="_blank">GitHub</a>
+        </div>
+        <button type="button" class="report-btn" data-report><span aria-hidden="true">&#9873;</span> Report a problem</button>
       </div>
     </div>
-    <div class="footer-copy">© 2026 ChessTrack · An independent project for players who want a reason for every result.</div>
+    <div class="footer-copy">© 2026 ChessTrack · An independent project for players who want a reason for every result. Something not working? <button type="button" class="link-inline" data-report>Let us know</button>.</div>
   </footer>
 
   <!-- INSTALL MODAL -->
@@ -1128,6 +1223,54 @@
         <strong>Heads up:</strong> Android may warn the file is from an unknown source. That's normal for apps outside the Play Store. ChessTrack collects no data and needs no account.
       </div>
       <a href="https://expo.dev/artifacts/eas/kRMFVuL1BiGpLS49QjgeXY.apk" target="_blank" class="modal-btn" id="modalDownloadBtn" download>Start download &#8595;</a>
+    </div>
+  </div>
+
+  <!-- REPORT MODAL -->
+  <div class="modal-backdrop" id="reportModal" role="dialog" aria-modal="true" aria-labelledby="reportTitle" aria-hidden="true">
+    <div class="modal" role="document">
+      <button class="modal-close" id="reportClose" aria-label="Close report form">&times;</button>
+
+      <div id="reportView">
+        <div class="eyebrow">feedback · goes straight to the developer</div>
+        <h3 id="reportTitle">Report a problem</h3>
+        <p class="modal-sub">Hit a bug or something that looks off? Tell us and we'll get it fixed.</p>
+
+        <form id="reportForm" novalidate>
+          <span class="field-label" id="surfaceLabel">What's it about?</span>
+          <div class="pillrow" id="surfaceGroup" role="group" aria-labelledby="surfaceLabel">
+            <button type="button" class="pill active" data-value="The app">The app</button>
+            <button type="button" class="pill" data-value="This website">This website</button>
+          </div>
+
+          <span class="field-label" id="typeLabel">Type</span>
+          <div class="pillrow" id="typeGroup" role="group" aria-labelledby="typeLabel">
+            <button type="button" class="pill active" data-value="Bug">Bug</button>
+            <button type="button" class="pill" data-value="Feature idea">Feature idea</button>
+            <button type="button" class="pill" data-value="Other">Other</button>
+          </div>
+
+          <label class="field-label" for="reportMsg">Message</label>
+          <textarea id="reportMsg" class="field-input" rows="5" placeholder="What happened? What did you expect instead? Steps to reproduce help a lot."></textarea>
+
+          <label class="field-label" for="reportEmail">Your email <em>(optional, so we can reply)</em></label>
+          <input id="reportEmail" class="field-input" type="email" autocomplete="email" placeholder="you@example.com" />
+
+          <p class="field-error" id="reportError" hidden>Please describe the problem first.</p>
+
+          <button type="submit" class="modal-btn"><span aria-hidden="true">&#9993;</span> Open email &amp; send</button>
+          <p class="modal-note-sm">This opens your email app, pre-filled to the developer. Your browser and the current page URL are attached to help debugging. Nothing is sent until you press send.</p>
+        </form>
+      </div>
+
+      <div id="reportSent" hidden>
+        <div class="report-sent">
+          <div class="sent-check" aria-hidden="true">&#10003;</div>
+          <h4>Your email is ready</h4>
+          <p>We opened your mail app with everything filled in. Just press send. Thank you!</p>
+          <button type="button" class="modal-btn" id="reportDone">Done</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1184,26 +1327,99 @@
     curveIO.observe(document.getElementById('curveCard'));
   }
 
-  /* ---- Install modal ---- */
-  const installModal = document.getElementById('installModal');
-  const modalClose = document.getElementById('modalClose');
-  function openModal() {
-    installModal.classList.add('open');
-    installModal.setAttribute('aria-hidden', 'false');
+  /* ---- Modals (generic open/close for install + report) ---- */
+  function openModalEl(modal, focusEl) {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
-    modalClose.focus();
+    (focusEl || modal.querySelector('.modal-close')).focus();
   }
-  function closeModal() {
-    installModal.classList.remove('open');
-    installModal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
+  function closeModalEl(modal) {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    if (!document.querySelector('.modal-backdrop.open')) document.body.classList.remove('modal-open');
   }
-  document.querySelectorAll('[data-install-guide]').forEach(el => {
-    el.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+
+  const installModal = document.getElementById('installModal');
+  const reportModal = document.getElementById('reportModal');
+
+  document.querySelectorAll('[data-install-guide]').forEach(el =>
+    el.addEventListener('click', (e) => { e.preventDefault(); openModalEl(installModal); }));
+  document.getElementById('modalClose').addEventListener('click', () => closeModalEl(installModal));
+
+  document.querySelectorAll('[data-report]').forEach(el =>
+    el.addEventListener('click', (e) => { e.preventDefault(); resetReport(); openModalEl(reportModal); }));
+  document.getElementById('reportClose').addEventListener('click', () => closeModalEl(reportModal));
+
+  [installModal, reportModal].forEach(m =>
+    m.addEventListener('click', (e) => { if (e.target === m) closeModalEl(m); }));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll('.modal-backdrop.open').forEach(closeModalEl);
   });
-  modalClose.addEventListener('click', closeModal);
-  installModal.addEventListener('click', (e) => { if (e.target === installModal) closeModal(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && installModal.classList.contains('open')) closeModal(); });
+
+  /* ---- Report form: composes a mailto to the developer ---- */
+  const REPORT_EMAIL = 'chenchen20092020@gmail.com';
+  const reportForm = document.getElementById('reportForm');
+  const reportView = document.getElementById('reportView');
+  const reportSent = document.getElementById('reportSent');
+  const reportMsg = document.getElementById('reportMsg');
+  const reportEmail = document.getElementById('reportEmail');
+  const reportErr = document.getElementById('reportError');
+  const surfaceGroup = document.getElementById('surfaceGroup');
+  const typeGroup = document.getElementById('typeGroup');
+
+  const REPORT_PLACEHOLDERS = {
+    'Bug': 'What happened? What did you expect instead? Steps to reproduce help a lot.',
+    'Feature idea': 'What would you like ChessTrack to do?',
+    'Other': 'Share anything on your mind…'
+  };
+
+  function pillValue(group) {
+    const el = group.querySelector('.pill.active');
+    return el ? el.dataset.value : '';
+  }
+  function wirePillGroup(group, onChange) {
+    group.addEventListener('click', (e) => {
+      const btn = e.target.closest('.pill');
+      if (!btn) return;
+      group.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      if (onChange) onChange(btn.dataset.value);
+    });
+  }
+  wirePillGroup(surfaceGroup);
+  wirePillGroup(typeGroup, (v) => { reportMsg.placeholder = REPORT_PLACEHOLDERS[v] || REPORT_PLACEHOLDERS.Other; });
+
+  function resetReport() {
+    reportView.hidden = false;
+    reportSent.hidden = true;
+    reportErr.hidden = true;
+  }
+
+  reportForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const msg = reportMsg.value.trim();
+    if (!msg) { reportErr.hidden = false; reportMsg.focus(); return; }
+    reportErr.hidden = true;
+    const surface = pillValue(surfaceGroup);
+    const type = pillValue(typeGroup);
+    const contact = reportEmail.value.trim();
+    const subject = `[ChessTrack] ${type} · ${surface}`;
+    const body =
+      `${msg}\n\n` +
+      `- - -\n` +
+      `Type: ${type}\n` +
+      `About: ${surface}\n` +
+      (contact ? `Reply to: ${contact}\n` : '') +
+      `Page: ${location.href}\n` +
+      `Browser: ${navigator.userAgent}`;
+    window.location.href =
+      `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    reportView.hidden = true;
+    reportSent.hidden = false;
+  });
+
+  document.getElementById('reportDone').addEventListener('click', () => closeModalEl(reportModal));
 
   /* ============================================================
      SIGNATURE: self-playing hero board (a real 7-move trap)
