@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ChessTrack — Find the move that cost you the game</title>
-<meta name="description" content="ChessTrack runs a real engine on your games, explains every blunder in one plain sentence, and builds puzzles from your own mistakes. Syncs with Chess.com and Lichess." />
+<meta name="description" content="Free chess improvement app with no paywall. ChessTrack runs a real engine on your games, explains every blunder in one plain sentence, and builds puzzles from your own mistakes. Syncs with Chess.com and Lichess." />
 <meta property="og:title" content="ChessTrack — The engine gives you a number. We give you the reason." />
 <meta property="og:description" content="A real engine explains every blunder in plain English, then builds targeted puzzles from the mistakes you actually make. Syncs with Chess.com and Lichess." />
 <meta property="og:type" content="website" />
@@ -120,6 +120,7 @@
     line-height: 1.7;
     margin-top: 18px;
   }
+  .section-sub em { font-style: italic; color: var(--accent-lt); }
 
   /* ---------- NAV ---------- */
   .nav {
@@ -256,14 +257,30 @@
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 18px 36px -14px rgba(0,0,0,0.75); }
   .btn-outline { background: transparent; border: 1px solid var(--border-lt); color: var(--text); }
   .btn-outline:hover { transform: translateY(-2px); border-color: var(--accent); background: rgba(201,183,133,0.06); }
-  .hero-note {
+  .hero-trust {
+    display: flex; flex-wrap: wrap; gap: 8px;
     margin-top: 22px;
+    opacity: 0;
+    animation: word-in 0.8s ease 0.9s forwards;
+  }
+  .tbadge {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.01em;
+    color: var(--sub);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 13px;
+  }
+  .tbadge i { color: var(--success); font-style: normal; font-size: 12px; line-height: 1; }
+  .hero-note {
+    margin-top: 16px;
     color: var(--muted);
     font-family: var(--mono);
     font-size: 12.5px;
     letter-spacing: 0.02em;
     opacity: 0;
-    animation: word-in 0.8s ease 0.95s forwards;
+    animation: word-in 0.8s ease 1.05s forwards;
   }
 
   /* ---------- HERO BOARD (signature) ---------- */
@@ -893,10 +910,15 @@
       </h1>
       <p class="sub">ChessTrack runs a real engine on every game, then tells you in one plain sentence what went wrong and how to fix it. The eval becomes a lesson. <strong style="color:var(--text);font-weight:600">Not just a number.</strong></p>
       <div class="cta-row">
-        <a href="https://expo.dev/artifacts/eas/kRMFVuL1BiGpLS49QjgeXY.apk" target="_blank" class="btn btn-primary" data-install-guide>Download for Android</a>
+        <a href="https://expo.dev/artifacts/eas/kRMFVuL1BiGpLS49QjgeXY.apk" target="_blank" class="btn btn-primary" data-install-guide>Download free for Android</a>
         <a href="#features" class="btn btn-outline">See how it works</a>
       </div>
-      <div class="hero-note">free · no account · android &nbsp;//&nbsp; chess.com &amp; lichess sync</div>
+      <div class="hero-trust">
+        <span class="tbadge"><i>&#10003;</i> Free forever</span>
+        <span class="tbadge"><i>&#10003;</i> No paywall on analysis</span>
+        <span class="tbadge"><i>&#10003;</i> No account, no ads</span>
+      </div>
+      <div class="hero-note">android · syncs with chess.com &amp; lichess · powered by stockfish</div>
     </div>
 
     <div class="board-stage">
@@ -924,10 +946,10 @@
   <div class="strip reveal">
     <div class="strip-track">
       <span>
-        <b>−2.6</b> explained in english <b>·</b> hung pieces <b>·</b> missed tactics <b>·</b> back-rank mates <b>·</b> blunder → lesson <b>·</b> targeted puzzles <b>·</b> king safety <b>·</b> rating plateaus <b>·</b>
+        <b>free forever</b> <b>·</b> powered by Stockfish <b>·</b> explained by LLaMA 3.3 <b>·</b> syncs Chess.com &amp; Lichess <b>·</b> no paywall on getting better <b>·</b> no ads <b>·</b> no account <b>·</b>
       </span>
       <span aria-hidden="true">
-        <b>−2.6</b> explained in english <b>·</b> hung pieces <b>·</b> missed tactics <b>·</b> back-rank mates <b>·</b> blunder → lesson <b>·</b> targeted puzzles <b>·</b> king safety <b>·</b> rating plateaus <b>·</b>
+        <b>free forever</b> <b>·</b> powered by Stockfish <b>·</b> explained by LLaMA 3.3 <b>·</b> syncs Chess.com &amp; Lichess <b>·</b> no paywall on getting better <b>·</b> no ads <b>·</b> no account <b>·</b>
       </span>
     </div>
   </div>
@@ -965,7 +987,7 @@
       <div class="section-head center reveal">
         <div class="eyebrow"><span class="move">2. Nf3</span> the core idea</div>
         <h2 class="section-title">The engine gives you <em>a number.</em><br>ChessTrack gives you <em>the reason.</em></h2>
-        <p class="section-sub">Every game runs through a real engine. Then a coaching layer turns that cold evaluation into one plain sentence: what you missed, and what to play instead.</p>
+        <p class="section-sub">The eval bar tells you <em>that</em> you're worse. ChessTrack tells you <em>why.</em> Every game runs through a real engine, then a coaching layer turns that cold number into one plain sentence: what you missed, and what to play instead.</p>
       </div>
       <div class="translate-card reveal">
         <div class="translate-grid">
@@ -1069,7 +1091,7 @@
           <div class="ico">&#9873;</div>
           <span class="tag">goals</span>
           <h3>Goals &amp; streaks</h3>
-          <p>Set a target rating, watch the gap close, and keep a daily-consistency streak that makes review a habit, not a chore.</p>
+          <p>Set a target rating, watch the gap close, and build a daily streak you won't want to break. Improvement becomes a habit, not a chore.</p>
         </div>
       </div>
     </div>
@@ -1100,7 +1122,7 @@
       <div class="tracker">
         <div class="reveal">
           <div class="eyebrow"><span class="move">6. Re1</span> the long game</div>
-          <h2 class="section-title" style="font-size:clamp(28px,3.4vw,38px)">Watch the line<br>finally <em>climb.</em></h2>
+          <h2 class="section-title" style="font-size:clamp(28px,3.4vw,38px)">See what's holding you<br>back from your <em>peak rating.</em></h2>
           <ul class="tracker-list" style="margin-top:28px">
             <li><span class="n">a)</span><div><h4>Every game, on the curve</h4><p>Synced results plot themselves so the trend is honest, with no cherry-picking your good days.</p></div></li>
             <li><span class="n">b)</span><div><h4>Plateaus you can see</h4><p>Flat stretches stop being a mystery once they're sitting next to the games that caused them.</p></div></li>
@@ -1159,9 +1181,9 @@
       <div class="download reveal">
         <div class="mark-big">&#9812;</div>
         <h2>Stop guessing at the eval bar.<br>Start understanding it.</h2>
-        <p>Free on Android. No account, no ads, no subscription, just your games and a plain-English reason for every result.</p>
+        <p>Free on Android. Analysis, puzzles, and coaching all unlocked, with no paywall, no ads, and no account. Everywhere else charges for the tools that make you better. Here they're just free.</p>
         <a href="https://expo.dev/artifacts/eas/kRMFVuL1BiGpLS49QjgeXY.apk" target="_blank" class="btn btn-primary" style="font-size:16px;padding:18px 36px" data-install-guide>Download the APK</a>
-        <div class="stats">free · android · chess.com + lichess · no subscription</div>
+        <div class="stats">free forever · no paywall · no ads · android · chess.com + lichess</div>
       </div>
     </div>
   </section>
